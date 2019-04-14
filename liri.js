@@ -26,6 +26,9 @@ switch (dothis) {
 // concert-this --> searches the bands in town artist events api for an artist and gives back: name of venue, venue location, date of event (MM/DD/YYYY)
 // "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
 
+function concert(lookthis) {
+
+}
 
 // spotify-this-song --> artist(s), song name, preview link of song, album | if no song, a default song
 // uses the node spotify api package (node-spotify-api)
@@ -47,7 +50,7 @@ function spotify(lookthis) {
         console.log("Preview Link: " + songInfo[0].preview_url);
         console.log("Album: " + songInfo[0].album.name);
     });
-}
+};
 
 
 // movie-this  --> looks on OMDB title of movie, year of release, imdb rating, rotten tomatoes rating, country of production, language, short plot, actors
@@ -61,16 +64,44 @@ function movie(lookthis) {
         if (!lookthis) {
             lookthis = "Mr Nobody";
         }
-
-
-    })
-
-}
+        if (error) {
+            console.log("Oops! Something went wrong \n" + err)
+            return;
+        }
+        if (response.statusCode === 200) {
+            console.log("Title: " + JSON.parse(body).Title);
+            console.log("Release Year: " + JSON.parse(body).Year);
+            console.log("IMDB Rating: " + JSON.parse(body).imdbRating + " | Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+            console.log("Country: " + JSON.parse(body).Country);
+            console.log("Language: " + JSON.parse(body).Language);
+            console.log("Plot: " + JSON.parse(body).Plot);
+            console.log("Actors: " + JSON.parse(body).Actors);
+        }
+    });
+};
 
 
 // do-what-it-says
 // using node package fs: takes the text inside of random and calls a command
+function doit() {
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            console.log("Oops! Something went wrong \n" + err)
+            return;
+        }
+        // split to make more readable, and remove quotes
+        var dataArray = data.split(",");
+        var rand = dataArray[1].slice(1, -1);
 
+        if (dataArray[0] === "concert-this") {
+            concert(rand);
+        } else if (dataArray[0] === "spotiify-this-song") {
+            spotify(rand);
+        } else if (dataArray[0] === "movie-this") {
+            movie(rand);
+        }
+    })
+}
 
 
 // bonus: log to a text file called log.txt
