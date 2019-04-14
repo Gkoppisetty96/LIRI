@@ -1,7 +1,7 @@
 require("dotenv").config();
-var fs = require ("fs");
-var axios = require ("axios");
-var Spotify = require ("node-spotify-api");
+var fs = require("fs");
+var axios = require("axios");
+var Spotify = require("node-spotify-api");
 // setting up keys for spotify api
 var keys = require("./keys.js");
 var spotify = new Spotify(keys.spotify);
@@ -49,7 +49,7 @@ function spotify_song(lookthis) {
         }
 
         var songInfo = data.tracks.items;
-        console.log("Artist(s): " + songInfo[0].artists[0].name);
+        console.log("\nArtist(s): " + songInfo[0].artists[0].name);
         console.log("Song Name: " + songInfo[0].name);
         console.log("Preview Link: " + songInfo[0].preview_url);
         console.log("Album: " + songInfo[0].album.name);
@@ -62,28 +62,28 @@ function spotify_song(lookthis) {
 // uses axios package (api key trilogy)
 
 function movie(lookthis) {
+    if (!lookthis) {
+        lookthis = "Mr Nobody";
+    }
     var queryUrl = "http://www.omdbapi.com/?t=" + lookthis + "&y=&plot=short&apikey=trilogy";
 
-    request(queryURL, function (error, response, body) {
-        if (!lookthis) {
-            lookthis = "Mr Nobody";
-        }
-        if (error) {
-            console.log("Oops! Something went wrong \n" + err)
-            return;
-        }
-        if (response.statusCode === 200) {
-            console.log("Title: " + JSON.parse(body).Title);
-            console.log("Release Year: " + JSON.parse(body).Year);
-            console.log("IMDB Rating: " + JSON.parse(body).imdbRating + " | Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
-            console.log("Country: " + JSON.parse(body).Country);
-            console.log("Language: " + JSON.parse(body).Language);
-            console.log("Plot: " + JSON.parse(body).Plot);
-            console.log("Actors: " + JSON.parse(body).Actors);
-        }
-    });
-};
 
+    axios.get(queryUrl).then(
+        function (response) {
+            // console.log(response.data);
+            console.log("\nTitle: " + response.data.Title);
+            console.log("Release Year: " + response.data.Year);
+            console.log("IMDB Rating: " + response.data.imdbRating + " | Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+            console.log("Country: " + response.data.Country);
+            console.log("Language: " + response.data.Language);
+            console.log("Plot: " + response.data.Plot);
+            console.log("Actors: " + response.data.Actors);
+        }).catch(function (error) {
+            console.log("Oops! Something went wrong \n" + error);
+            return;
+        });
+
+}
 
 // do-what-it-says
 // using node package fs: takes the text inside of random and calls a command
@@ -99,7 +99,7 @@ function doit() {
 
         if (dataArray[0] === "concert-this") {
             concert(rand);
-        } else if (dataArray[0] === "spotiify-this-song") {
+        } else if (dataArray[0] === "spotify-this-song") {
             spotify_song(rand);
         } else if (dataArray[0] === "movie-this") {
             movie(rand);
@@ -107,6 +107,4 @@ function doit() {
     })
 }
 
-
-// bonus: log to a text file called log.txt
-
+// bonus: log everything to a text file
