@@ -2,6 +2,7 @@ require("dotenv").config();
 var fs = require("fs");
 var axios = require("axios");
 var Spotify = require("node-spotify-api");
+var moment = require ("moment");
 // setting up keys for spotify api
 var keys = require("./keys.js");
 var spotify = new Spotify(keys.spotify);
@@ -14,7 +15,7 @@ var lookthis = input[3];
 
 switch (dothis) {
     case "concert-this":
-        bands(lookthis);
+        concert(lookthis);
         break;
     case "spotify-this-song":
         spotify_song(lookthis);
@@ -28,9 +29,25 @@ switch (dothis) {
 };
 
 // concert-this --> searches the bands in town artist events api for an artist and gives back: name of venue, venue location, date of event (MM/DD/YYYY)
-// "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
 
 function concert(lookthis) {
+    if(lookthis) {
+        artist = lookthis;
+    }
+    else {
+        console.log ("\nYou didn't search anything?");
+    }
+
+    var queryURL= "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+
+    axios(queryURL).then(function(results){
+        console.log ("\nName of Venue: " + results.data[0].venue.name);
+        console.log("Location: " + results.data[0].venue.city + ", " + results.data[0].venue.country);
+        console.log("Date: " + moment(results.data[0].datetime).format("MM/DD/YYYY"));
+    }) .catch (function (error) {
+        console.log("Oops! Something went wrong \n" + error)
+        return;
+    })
 
 }
 
@@ -42,9 +59,9 @@ function spotify_song(lookthis) {
     if (!lookthis) {
         lookthis = "The Sign";
     }
-    spotify.search({ type: "track", query: lookthis }, function (err, data) {
-        if (err) {
-            console.log("Oops! Something went wrong \n" + err)
+    spotify.search({ type: "track", query: lookthis }, function (error, data) {
+        if (error) {
+            console.log("Oops! Something went wrong \n" + error)
             return;
         }
 
