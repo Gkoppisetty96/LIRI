@@ -1,7 +1,11 @@
 require("dotenv").config();
+var fs = require ("fs");
+var axios = require ("axios");
+var Spotify = require ("node-spotify-api");
 // setting up keys for spotify api
 var keys = require("./keys.js");
-// var spotify = new Spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify);
+
 
 // liri can take in the following commands:
 var input = process.argv;
@@ -13,7 +17,7 @@ switch (dothis) {
         bands(lookthis);
         break;
     case "spotify-this-song":
-        spotify(lookthis);
+        spotify_song(lookthis);
         break;
     case "movie-this":
         movie(lookthis);
@@ -33,8 +37,8 @@ function concert(lookthis) {
 // spotify-this-song --> artist(s), song name, preview link of song, album | if no song, a default song
 // uses the node spotify api package (node-spotify-api)
 
-function spotify(lookthis) {
-    var spotify = new Spotify(keys.spotify);
+function spotify_song(lookthis) {
+    // var spotify = new Spotify(keys.spotify);
     if (!lookthis) {
         lookthis = "The Sign";
     }
@@ -96,7 +100,7 @@ function doit() {
         if (dataArray[0] === "concert-this") {
             concert(rand);
         } else if (dataArray[0] === "spotiify-this-song") {
-            spotify(rand);
+            spotify_song(rand);
         } else if (dataArray[0] === "movie-this") {
             movie(rand);
         }
