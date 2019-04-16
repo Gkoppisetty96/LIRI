@@ -3,18 +3,18 @@
 LIRI is kinda like SIRI, but it's a Language Interprettaion and Recognition Interface. LIRI is a command line node app that takes in parameters and gives you back data.
 
 LIRI can search the Bands in Town API for concerts:
-![concert-this](../assets/images/concert.PNG)
+![concert-this](/assets/concert.PNG)
 
 the Spotify API for songs:
-![spotify-this-song](../assets/images/spotify.PNG)
+![spotify-this-song](/assets/spotify.PNG)
 
 the OMDB API for movies:
-![movie-this](../assets/images/movie.PNG)
+![movie-this](/assets/movie.PNG)
 
 as well as read commands from a text file:
-![read concert-this](../assets/images/doit_1.PNG)
-![read spotify-this-song](../assets/images/doit_2.PNG)
-![read movie-this](../assets/images/doit_3.PNG)
+![read concert-this](/assets/doit_1.PNG)
+![read spotify-this-song](/assets/doit_2.PNG)
+![read movie-this](/assets/doit_3.PNG)
 
 
 ## Running this Application
