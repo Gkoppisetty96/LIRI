@@ -9,9 +9,8 @@ var spotify = new Spotify(keys.spotify);
 
 
 // liri can take in the following commands:
-var input = process.argv;
-var dothis = input[2];
-var lookthis = input[3];
+var dothis = process.argv[2];
+var lookthis = process.argv.slice(3).join(" ");
 
 switch (dothis) {
     case "concert-this":
@@ -107,7 +106,7 @@ function movie(lookthis) {
 function doit() {
     fs.readFile("random.txt", "utf8", function (error, data) {
         if (error) {
-            console.log("Oops! Something went wrong \n" + err)
+            console.log("Oops! Something went wrong \n" + error)
             return;
         }
         // split to make more readable, and remove quotes
