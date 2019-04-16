@@ -38,9 +38,10 @@ function concert(lookthis) {
     }
 
     var queryURL= "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
-
+    
     axios(queryURL).then(function(results){
-        console.log ("\nName of Venue: " + results.data[0].venue.name);
+        console.log ("\nConcert: " + results.data[0].lineup[0])
+        console.log ("Name of Venue: " + results.data[0].venue.name);
         console.log("Location: " + results.data[0].venue.city + ", " + results.data[0].venue.country);
         console.log("Date: " + moment(results.data[0].datetime).format("MM/DD/YYYY"));
     }) .catch (function (error) {
@@ -103,6 +104,7 @@ function movie(lookthis) {
 
 // do-what-it-says
 // using node package fs: takes the text inside of random and calls a command
+// spotify-this-song,"I Want it That Way"
 function doit() {
     fs.readFile("random.txt", "utf8", function (error, data) {
         if (error) {
