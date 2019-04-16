@@ -18,6 +18,7 @@ as well as read commands from a text file:
 
 
 ## Running this Application
+After downloading all of the files, there are still a few steps to complete.
 To run this application successfully, you will need to run npm install (which will install axios, dotenv, moment, and the node-spotify-api).
 Additionally, you will need to request credentials to use the Spotify API (https://developer.spotify.com/my-applications/#!/), and save them in a file named key.js using the following notation:
 
